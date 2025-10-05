@@ -1,0 +1,69 @@
+===============================================================================
+                             Tellusim Core SDK
+===============================================================================
+
+
+GETTING STARTED
+===============================================================================
+
+Run the appropriate script for your platform:
+ - Windows:     `run_browser.bat`
+ - macOS/Linux: `run_browser.sh`
+
+The SDK interface will open in your default web browser.
+Do not close the browser app while using the SDK from the web browser.
+
+Note: The first launch may take additional time due to initial shader compilation.
+For optimal performance, we recommend using the Vulkan or Direct3D12 graphics APIs.
+
+Learn more about our technology at: https://tellusim.com/
+For inquiries, email: info@tellusim.com
+
+(C) 2018-2025 Tellusim Technologies Inc. All rights reserved.
+
+
+USAGE RESTRICTIONS
+===============================================================================
+
+* Evaluation Use Only - Not for Production Environments
+
+The Tellusim Core SDK Software must be used ONLY for evaluation and testing purposes and NOT for any
+commercial purpose, including, but not limited to pre-sale testing and demonstration purposes.
+
+
+PLATFORM REQUIREMENTS
+===============================================================================
+
+
+Windows
+-------------------------------------------------------------------------------
+
+- Requires Visual Studio 2017 or later (Community, Professional, or Enterprise editions).
+
+- If Visual Studio is not installed in the default directory, modify the appropriate script:
+  `bin\vcvars_x64.bat` or `bin\vcvars_arm64.bat`
+
+
+macOS
+-------------------------------------------------------------------------------
+
+- Recommended SDK archive extraction method: Midnight Commander (`mc`).
+
+- Files extracted with the default Archive Utility or the `tar -xvjf` command may be marked as unsafe.
+  If this happens, run the following command in Terminal:
+  `xattr -dr com.apple.quarantine ./Tellusim_SDK_*`
+
+- Command Line Tools are sufficient, but installing Xcode.app is recommended.
+
+- Makefile-based projects require `ccache`. To install, run:
+  `brew install ccache`
+
+
+Linux
+-------------------------------------------------------------------------------
+
+- Requires: `ccache` and `clang++` compiler. To install, run:
+  `sudo apt-get install -y ccache clang`
+
+- Dialog and menu support requires one of the following packages:
+  `libgtk2.0-dev`, `libgtk-3-dev`, `qt5base-dev`, or `libqt4-dev`

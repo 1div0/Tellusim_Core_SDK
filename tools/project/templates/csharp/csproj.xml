@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<Postfix Condition="'$(Configuration)'=='Debug'">d</Postfix>
+		<Postfix Condition="'$(Configuration)'=='Release'"></Postfix>
+		<RootNamespace>@NAME@</RootNamespace>
+		<AssemblyName>@TARGET@$(Postfix)</AssemblyName>
+		<RunWorkingDirectory>$(MSBuildProjectDirectory)</RunWorkingDirectory>
+	</PropertyGroup>
+	<ItemGroup>
+		<Reference Include="TellusimCS$(Postfix)">
+			<HintPath>lib\TellusimCS$(Postfix).dll</HintPath>
+			<Private>true</Private>
+		</Reference>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="lib\TellusimC_@ARCH@$(Postfix).dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<TargetPath>TellusimC_@ARCH@$(Postfix).dll</TargetPath>
+		</None>
+		<None Include="lib\Tellusim_@ARCH@$(Postfix).dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<TargetPath>Tellusim_@ARCH@$(Postfix).dll</TargetPath>
+		</None>
+	</ItemGroup>
+</Project>

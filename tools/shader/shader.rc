@@ -1,0 +1,30 @@
+#include "winver.h"
+
+APPICON		ICON	"shader.ico"
+
+VS_VERSION_INFO	VERSIONINFO
+FILEVERSION		1,0,0,0
+PRODUCTVERSION	1,0,0,0
+FILEFLAGSMASK	VS_FFI_FILEFLAGSMASK
+FILEFLAGS		VS_FF_PRERELEASE
+FILEOS			VOS__WINDOWS32
+FILETYPE		VFT_APP
+FILESUBTYPE		VFT2_UNKNOWN
+BEGIN
+	BLOCK "StringFileInfo"
+	BEGIN
+		BLOCK "040904e4"
+		BEGIN
+			VALUE "CompanyName",		"Tellusim Technologies Inc."
+			VALUE "FileDescription",	"Shader Compiler Tool"
+			VALUE "FileVersion",		"1.0"
+			VALUE "LegalCopyright",		"\251 Tellusim Technologies Inc. All rights reserved."
+			VALUE "ProductName",		"Tellusim SDK"
+			VALUE "ProductVersion",		"1.0"
+		END
+	END
+	BLOCK "VarFileInfo"
+	BEGIN
+		VALUE "Translation", 0x409, 1200
+	END
+END

@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Class-Path: tellusim.jar
+Main-Class: com.main.main

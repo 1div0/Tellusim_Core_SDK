@@ -1,0 +1,5 @@
+@echo off
+
+start "" "http://localhost:9000/indexd.html"
+
+python3.exe -m http.server 9000

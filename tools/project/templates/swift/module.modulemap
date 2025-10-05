@@ -1,0 +1,6 @@
+module Tellusim {
+	header "TellusimObjCBase.h"
+	header "TellusimObjCMath.h"
+	header "TellusimObjCAPI.h"
+	export *
+}

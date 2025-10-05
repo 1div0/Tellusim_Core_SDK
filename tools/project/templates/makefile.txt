@@ -1,0 +1,118 @@
+# Optional command line arguments:
+#
+#  * debug  - 0, 1
+#  * depend - 0, 1
+
+TSROOT = @ROOT@
+
+CXX = ccache clang++
+
+DEPEND = .depend
+ARCH = $(shell uname -m)
+PLATFORM = $(shell uname -s)
+
+#
+# Architecture
+#
+ifeq "$(ARCH)" "x86_64"
+	ARCH=x64
+else ifeq "$(ARCH)" "armv7l"
+	ARCH=armv7
+else ifeq "$(ARCH)" "aarch64"
+	ARCH=arm64
+else ifeq "$(ARCH)" "arm64"
+	ARCH=arm64
+else
+ 	$(error Unknown arch $(ARCH))
+endif
+
+#
+# Platform
+#
+ifeq "$(PLATFORM)" "Linux"
+	
+	CFLAGS += -std=c++@STD@ -Wall -Wfloat-conversion -Os -fPIC -ffast-math -fvisibility=hidden
+	CFLAGS += -Wno-null-dereference -Wno-undefined-var-template
+	CFLAGS += -D_LINUX=1 -I$(TSROOT)/include -I$(TSROOT)/plugins -I$(TSROOT)/samples@CFLAGS@
+	LDFLAGS += -L$(TSROOT)/lib/linux/$(ARCH) -lstdc++ -lm -lpthread -ldl@LDFLAGS@
+	LDFLAGS += -Wl,-rpath,./bin,-rpath,$(TSROOT)/lib/linux/$(ARCH)
+	SIGN = test
+	
+else ifeq "$(PLATFORM)" "Darwin"
+	
+	ARCHFLAGS := -target $(shell uname -m)-apple-macos13
+	CFLAGS += $(ARCHFLAGS) -std=c++@STD@ -Wall -Wfloat-conversion -Os -ffast-math -fvisibility=hidden
+	CFLAGS += -Wno-null-dereference -Wno-return-std-move -Wno-undefined-var-template
+	CFLAGS += -D_MACOS=1 -I$(TSROOT)/include -I$(TSROOT)/plugins -I$(TSROOT)/samples@CFLAGS@
+	LDFLAGS += $(ARCHFLAGS) -L$(TSROOT)/lib/macos/$(ARCH) -lm@LDFLAGS@
+	LDFLAGS += -Wl,-rpath,@loader_path/bin,-rpath,@loader_path/$(TSROOT)/lib/macos/$(ARCH)/
+	SIGN = codesign --force --deep --sign "Mac Developer"
+	
+else
+ 	$(error Unknown platform $(PLATFORM))
+endif
+
+#
+# Debugging
+#
+ifneq "$(debug)" "0"
+	POSTFIX := $(POSTFIX)d
+	CFLAGS += -g -DTS_DEBUG=1
+	LDFLAGS += -lTellusim_$(ARCH)d
+else
+	CFLAGS += -DNDEBUG=1
+	LDFLAGS += -lTellusim_$(ARCH)
+endif
+
+#
+# Dependencies
+#
+ifneq "$(depend)" "0"
+	DEPS = $(SRCS)
+	ifeq "$(depend)" "1"
+		CLEAN += $(DEPEND)
+	endif
+else
+	DEPS =
+endif
+
+#
+# Target
+#
+TARGET = @TARGET@_$(ARCH)$(POSTFIX)
+
+#
+# Sources
+#
+SRCS = @SOURCES@
+OBJS = $(SRCS:.cpp=.o)
+
+#
+# Build target
+#
+all: $(TARGET)
+
+.cpp.o:
+	@echo `basename $<`
+	@$(CXX) $(CFLAGS) -c -o $@ $<
+
+$(DEPEND):
+	@rm -f $@
+	@echo "Depend `basename $(CURDIR)`"
+	@$(foreach SRC, $(DEPS), $(CXX) $(CFLAGS) -MM -MT $(SRC:.cpp=.o) $(SRC) >> $@;)
+
+$(TARGET): $(DEPEND) $(OBJS)
+	@$(CXX) -o $@ $(OBJS) $(LDFLAGS)
+	@echo "Done `basename $(CURDIR)`"
+	@$(SIGN) $@ 2>&1
+
+clean:
+	@echo "Cleaning `basename $(CURDIR)`"
+	@rm -f $(TARGET) $(OBJS) $(CLEAN)
+
+#
+# Dependencies
+#
+ifneq "$(MAKECMDGOALS)" "clean"
+ 	-include $(DEPEND)
+endif

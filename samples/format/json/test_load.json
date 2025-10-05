@@ -1,0 +1,21 @@
+{
+	"root": {
+		"null": null,
+		"bool_true": true,
+		"bool_false": false,
+		"number_int32": -113,
+		"number_uint32": 113,
+		"number_float32": 113.113,
+		"string": "this is a string",
+		"object": {
+			"first": "first string",
+			"second": "second string"
+		},
+		"null_array": [ null, null, null ],
+		"bool_array": [ true, false, true ],
+		"number_array": [ 0.0, 1.0, 2.0, 3.0 ],
+		"string_array": [ "first", "second", "third" ],
+		"object_array": [ { "first": "second" }, { "third": "fourth" } ],
+		"mixed_array": [ null, true, 1.0, "first", { }, [ ] ]
+	}
+}

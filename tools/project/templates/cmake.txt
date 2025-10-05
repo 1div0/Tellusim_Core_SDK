@@ -1,0 +1,46 @@
+cmake_minimum_required(VERSION 3.5)
+
+set(CMAKE_CXX_STANDARD @STD@)
+
+find_program(HAS_CCACHE "ccache")
+if(HAS_CCACHE)
+	set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ccache)
+endif()
+
+if(WIN32)
+	add_compile_options(/D_CRT_SECURE_NO_WARNINGS /fp:fast)
+	add_compile_options(/MD /MP /W4 /Os /EHsc /D_WIN32_WINNT=0x0603)
+elseif(UNIX)
+	add_compile_options(-Wall -Wno-undefined-var-template -Os)
+endif()
+
+include_directories(@INCLUDE_PATH@
+)
+
+if(WIN32)
+	add_definitions(-D_WIN64=1)
+	link_directories(@LIBRARY_PATH_WINDOWS@
+	)
+elseif(UNIX AND NOT APPLE)
+	add_definitions(-D_LINUX=1)
+	link_directories(@LIBRARY_PATH_LINUX@
+	)
+elseif(UNIX AND APPLE)
+	add_definitions(-D_MACOS=1)
+	link_directories(@LIBRARY_PATH_MACOS@
+	)
+endif()
+
+set(SRCS@SOURCES@
+)
+
+project(@NAME@)
+add_executable(@TARGET@ ${SRCS})
+set_target_properties(@TARGET@ PROPERTIES DEBUG_POSTFIX "_@ARCH@d")
+set_target_properties(@TARGET@ PROPERTIES RELEASE_POSTFIX "_@ARCH@")
+set_target_properties(@TARGET@ PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+target_link_libraries(@TARGET@ debug Tellusim_@ARCH@d optimized Tellusim_@ARCH@)
+
+if(NOT WIN32)
+	target_link_libraries(@TARGET@@LINK_LIBRARY@)
+endif()

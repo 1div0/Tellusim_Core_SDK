@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+ <uses-sdk android:minSdkVersion="@MINSDK@"/>
+ <application android:label="@APK@"
+  android:icon="@drawable/tellusim"
+  android:excludeFromRecents="false"
+  android:theme="@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen">
+  <activity android:label="@APK@"
+   android:screenOrientation="landscape"
+   android:launchMode="singleTask"
+   android:exported="true"
+   android:name="com.main.activity"
+   android:configChanges="orientation|keyboardHidden|screenSize|screenLayout">
+   <meta-data android:name="android.app.lib_name" android:value="TellusimJNI_arm64d"/>
+   <intent-filter>
+    <action android:name="android.intent.action.MAIN"/>
+    <category android:name="android.intent.category.LAUNCHER"/>
+   </intent-filter>
+  </activity>
+ </application>
+</manifest>

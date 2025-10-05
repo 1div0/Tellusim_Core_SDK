@@ -1,0 +1,21 @@
+cmake_minimum_required(VERSION 3.5.0)
+
+set(CMAKE_CXX_STANDARD @STD@)
+
+add_definitions(-D_ANDROID=1)
+add_compile_options(-Wall -Wno-null-dereference -Wno-undefined-var-template -Os)
+
+include_directories(@INCLUDE_PATH@
+)
+
+link_directories(@LIBRARY_PATH@
+)
+
+set(SRCS@SOURCES@
+)
+
+project(@APK@)
+add_library(@TARGET@ SHARED ${SRCS})
+target_link_libraries(@TARGET@ android log)
+target_link_libraries(@TARGET@ debug Tellusim_arm64d optimized Tellusim_arm64)
+target_link_libraries(@TARGET@@LINK_LIBRARY@)

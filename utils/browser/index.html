@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	
+	<head>
+		<meta charset="utf-8"/>
+		<link rel="stylesheet" href="index.css"/>
+		<script src="browser.js"></script>
+		<script src="index.js"></script>
+		<title>Tellusim Core SDK</title>
+	</head>
+	
+	<body onload="init();">
+		
+		<div class="navigation">
+			
+			<div class="header-title">
+				<div class="header-tellusim"/>
+					<a href="https://tellusim.com" target="blank"><img src="images/tellusim_engine.svg" width="216" height="70" alt="Tellusim Engine"/></a>
+				</div>
+				<p class="header-info" id="tab_info">Tellusim Core SDK</>
+			</div>
+			
+			<div class="tab-menu" id="tab_menu">
+				<div class="tab-group" id="tab_group"></div>
+			</div>
+			
+			<div class="settings-panel" id="settings_panel">
+				<div class="settings-table">
+					<div class="settings-row">
+						<div class="settings-lcell"><label for="settings_api">API:</label></div>
+						<div class="settings-rcell"><select id="settings_api"></select></div>
+					</div>
+					<div class="settings-row">
+						<div class="settings-lcell"><label for="settings_size">Size:</label></div>
+						<div class="settings-rcell"><select id="settings_size"></select></div>
+					</div>
+					<div class="settings-row">
+						<div class="settings-lcell"><label for="settings_device">Device:</label></div>
+						<div class="settings-rcell"><select id="settings_device"></select></div>
+					</div>
+					<div class="settings-row">
+						<div class="settings-lcell"><label for="settings_binary">Binary:</label></div>
+						<div class="settings-rcell"><select id="settings_binary"></select></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="items-table" id="items_table"></div>
+		
+		<p class="copyright">Copyright © 2018-2025, <a href="https://tellusim.com" target="blank">Tellusim Technologies Inc.</a> All rights reserved.</p>
+		
+	</body>
+	
+</html>

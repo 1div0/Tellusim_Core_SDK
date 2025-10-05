@@ -1,0 +1,107 @@
+# Optional command line arguments:
+#
+#  * debug  - 0, 1
+#  * depend - 0, 1
+
+TSROOT = @ROOT@
+
+DEPEND = .depend
+CXX = ccache em++
+RUN = emrun --serve_after_close --no_browser
+
+#
+# Default configuration
+#
+CFLAGS += -std=c++11 -Wall -Wfloat-conversion -Os -ffast-math -fvisibility=hidden
+CFLAGS += -D_EMSCRIPTEN=1 -I$(TSROOT)/include -I$(TSROOT)/plugins
+CFLAGS += -Wno-undefined-var-template -Wno-nontrivial-memcall
+CFLAGS += --use-port=emdawnwebgpu
+LDFLAGS += -s EXPORTED_RUNTIME_METHODS="['ccall','requestFullscreen']"
+LDFLAGS += -s STACK_SIZE=32MB -s TOTAL_MEMORY=256MB -s ALLOW_MEMORY_GROWTH=1
+LDFLAGS += -s FULL_ES3=1 -s GL_ENABLE_GET_PROC_ADDRESS=1
+LDFLAGS += --use-port=emdawnwebgpu -s ASYNCIFY=1
+LDFLAGS += -L$(TSROOT)/lib/emscripten/bc
+LDFLAGS += -Os --emrun
+LIBS += -lpthread
+
+#
+# Debugging
+#
+ifneq "$(debug)" "0"
+	POSTFIX := $(POSTFIX)d
+	CFLAGS += -g -DTS_DEBUG=1
+	LDFLAGS += -s ASSERTIONS=2
+	LIBS += -lTellusim_bcd
+else
+	CFLAGS += -DNDEBUG=1
+	LIBS += -lTellusim_bc
+endif
+
+#
+# Dependencies
+#
+ifneq "$(depend)" "0"
+	DEPS = $(SRCS)
+	ifeq "$(depend)" "1"
+		CLEAN += $(DEPEND)
+	endif
+else
+	DEPS =
+endif
+
+#
+# Assets
+#
+ASSETS = @ASSETS@
+ifneq "$(ASSETS)" "0"
+	LDFLAGS += $(addprefix --embed-file , $(wildcard $(ASSETS)))
+endif
+
+#
+# Page
+#
+LDFLAGS += --shell-file tellusim.html
+
+#
+# Targets
+#
+TARGET = @TARGET@.html
+
+#
+# Sources
+#
+SRCS = @SOURCES@
+OBJS = $(SRCS:.cpp=.o)
+
+#
+# Build target
+#
+all: $(TARGET)
+
+.cpp.o:
+	@echo `basename $<`
+	@$(CXX) $(CFLAGS) $(FLAGS) -c -o $@ $<
+
+$(DEPEND):
+	@rm -f $@
+	@echo "Depend `basename $(CURDIR)`"
+	@$(foreach SRC, $(DEPS), $(CXX) $(CFLAGS) $(FLAGS) -MM -MT $(SRC:.cpp=.o) $(SRC) >> $@;)
+
+$(TARGET): $(DEPEND) $(OBJS)
+	@$(CXX) -o $@ $(OBJS) $(LDFLAGS) $(LIBS)
+	@echo "Done `basename $(CURDIR)`"
+
+run:
+	@echo "Running `basename $(CURDIR)`"
+	@$(RUN) $(TARGET) $(RUN_ARGS)
+
+clean:
+	@echo "Cleaning `basename $(CURDIR)`"
+	@rm -f $(TARGET) $(OBJS) $(CONFIG) $(CLEAN) *.js *.wasm
+
+#
+# Dependencies
+#
+ifneq "$(MAKECMDGOALS)" "clean"
+ 	-include $(DEPEND)
+endif

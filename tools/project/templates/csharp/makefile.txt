@@ -1,0 +1,40 @@
+# Optional command line arguments:
+#
+#  * debug  - 0, 1
+
+CSC = csc
+MONO = mono
+
+#
+# Debugging
+#
+ifneq "$(debug)" "0"
+	POSTFIX := $(POSTFIX)d
+endif
+
+#
+# Target
+#
+TARGET = @TARGET@_@ARCH@$(POSTFIX).exe
+
+LIBRARY = lib/libTellusimCS$(POSTFIX).dll
+
+CFLAGS = /langversion:8.0
+
+SRCS = @SOURCES@
+
+#
+# Build target
+#
+$(TARGET): $(SRCS)
+	@$(CSC) /nologo /target:exe $(CFLAGS) /out:$@ /reference:$(LIBRARY) $(SRCS)
+	@echo "<configuration><runtime><assemblyBinding><probing privatePath=\"lib\"/></assemblyBinding></runtime></configuration>" > $(TARGET).config
+	@echo "Done `basename $@`"
+
+run:
+	@echo "Running `basename $(CURDIR)`"
+	@$(MONO) $(TARGET)
+
+clean:
+	@echo "Cleaning `basename $(CURDIR)`"
+	@rm -f $(TARGET) $(TARGET).config

@@ -1,0 +1,114 @@
+# Optional command line arguments:
+#
+#  * DEBUG  - 0, 1
+#  * CCACHE - 0, 1
+#  * DEPEND - 0, 1
+
+TSROOT = @ROOT@
+
+RC = rc.exe
+CXX = cl.exe
+LINK = link.exe
+
+ARCH = @ARCH@
+RESOURCE = tellusim.rc
+
+DEPFILE = .depend
+DEP = $(TSROOT)\bin\ts_dep.bat
+
+#
+# Compiler cache
+#
+!if "$(CCACHE)" != "0" && [where /q ccache.exe] == 0
+CXX = ccache.exe depend_mode=true $(CXX)
+!endif
+
+#
+# Default configuration
+#
+CFLAGS = $(CFLAGS) /nologo /bigobj /fp:fast /D_CRT_SECURE_NO_WARNINGS
+CFLAGS = $(CFLAGS) /MD /W4 /O2 /EHsc /FC /D_WIN32_WINNT=0x0603
+CFLAGS = $(CFLAGS) /I$(TSROOT)\include /I$(TSROOT)\plugins
+
+LDFLAGS = $(LDFLAGS) /nologo /incremental /debug:fastlink
+
+DEPFLAGS = $(DEPFLAGS) /I$(MAKEDIR)
+
+#
+# Debugging
+#
+!if "$(DEBUG)" != "0"
+POSTFIX = $(POSTFIX)d
+CFLAGS = $(CFLAGS) /Z7 /DTS_DEBUG=1
+LDFLAGS = $(LDFLAGS) $(TSROOT)\lib\windows\@VERSION@$(ARCH)\Tellusim_$(ARCH)d.lib
+!else
+CFLAGS = $(CFLAGS) /DNDEBUG
+LDFLAGS = $(LDFLAGS) $(TSROOT)\lib\windows\@VERSION@$(ARCH)\Tellusim_$(ARCH).lib
+!endif
+
+#
+# Dependencies
+#
+!if "$(DEPEND)" != "0"
+DEPS = $(SRCS)
+!if "$(DEPEND)" == "1"
+CLEAN = $(CLEAN) $(DEPFILE)
+!endif
+!else
+DEPS =
+!endif
+DEPEND = $(DEPFILE)
+
+#
+# Target
+#
+TARGET = @TARGET@_$(ARCH)$(POSTFIX).exe
+
+#
+# Sources
+#
+SRCS = @SOURCES@
+SRCS = $(SRCS:/=\\)
+SRCS = $(SRCS:\\=\)
+OBJS = $(SRCS:.cpp=.obj)
+
+#
+# Targets
+#
+OBJS = $(OBJS) $(RESOURCE:.rc=.res)
+
+#
+# Build target
+#
+all: $(TARGET) done
+
+.rc.res:
+	@$(RC) /nologo /fo$*.res $<
+
+.cpp.obj:
+	@$(CXX) $(CFLAGS) $(FLAGS) /c /Fo$*.obj $<
+
+$(DEPEND): $(MAKEDIR)
+	@del /f $@ 2>nul
+	@echo Depend %|fF
+	@$(DEP) $(DEPFLAGS) /Fo$@ $(DEPS)
+
+$(TARGET): $(DEPEND) $(OBJS)
+	@$(LINK) $(LDFLAGS) /out:$@ $(OBJS)
+
+done: $(MAKEDIR)
+	@echo Done %|fF
+
+clean: $(MAKEDIR)
+	@echo Cleaning %|fF
+	@del /f $(TARGET) $(OBJS) $(CLEAN) 2>nul
+	@del /f $(TARGET:.exe=.lib) $(TARGET:.dll=.lib) 2>nul
+	@del /f $(TARGET:.exe=.pdb) $(TARGET:.dll=.pdb) 2>nul
+	@del /f *.exp *.ilk *.res 2>nul
+
+#
+# Dependencies
+#
+!if exist($(DEPEND))
+!include $(DEPEND)
+!endif

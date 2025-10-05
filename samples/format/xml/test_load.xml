@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- comment line -->
+<root version="2" attribute="root">
+	<first one="&lt;one&gt;" two="&quot;two&quot;">&lt;first data&gt;</first>
+	<second one="one" two="two"><![CDATA[second data]]></second>
+	<third one="one" two="two">&quot;third data<!-- data comment -->&quot;</third>
+	<fourth one="one" two ="two">
+		<fifth>&apos;fifth data&apos;</fifth>
+		<sixth>&#64;&#x40;</sixth>
+		<seventh>/path/to/file</seventh>
+	</fourth>
+</root>

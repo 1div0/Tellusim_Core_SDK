@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+<dict>
+	<key>XCFrameworkFormatVersion</key><string>1.0</string>
+	<key>CFBundlePackageType</key><string>XFWK</string>
+	<key>AvailableLibraries</key>
+	<array>
+		<dict>
+			<key>LibraryIdentifier</key><string>@PLATFORM@-@ARCH@</string>
+			<key>HeadersPath</key><string>Headers</string>
+			<key>BinaryPath</key><string>libTellusim.a</string>
+			<key>LibraryPath</key><string>libTellusim.a</string>
+			<key>SupportedPlatform</key><string>@PLATFORM@</string>
+			<key>SupportedArchitectures</key><array>
+				<string>@ARCH@</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

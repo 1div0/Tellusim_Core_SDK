@@ -1,0 +1,16 @@
+plugins {
+	id "java"
+	id "application"
+}
+application {
+	mainClass = "com.main.main"
+	applicationDefaultJvmArgs = [
+		"-Djava.library.path=${projectDir}/lib"
+	]
+	if(org.gradle.internal.os.OperatingSystem.current().isMacOsX()) {
+		applicationDefaultJvmArgs += "-XstartOnFirstThread"
+	}
+}
+dependencies {
+	implementation files("lib/tellusim.jar")
+}

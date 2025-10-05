@@ -1,0 +1,318 @@
+// Copyright (C) 2018-2025, Tellusim Technologies Inc. All rights reserved
+// https://tellusim.com/
+
+#include <core/TellusimLog.h>
+#include <core/TellusimBlob.h>
+#include <core/TellusimDirectory.h>
+#include <format/TellusimArchive.h>
+
+#include "../include/TellusimStreamer.h"
+
+/*
+ */
+namespace Tellusim {
+	
+	/*
+	 */
+	Streamer::Streamer(Flags flags) : flags(flags) {
+		
+		// save source callback
+		open_func = Source::getOpenCallback();
+		is_func = Source::getIsCallback();
+		callback_data = Source::getCallbackData();
+		
+		// set source callback
+		Source::setCallback(Streamer::open_callback, Streamer::is_callback, this);
+	}
+	
+	Streamer::~Streamer() {
+		
+		clear();
+		
+		// restore source callback
+		Source::setCallback(open_func, is_func, callback_data);
+	}
+	
+	/*
+	 */
+	void Streamer::clear() {
+		
+		AtomicLock atomic(lock);
+		
+		archives.clear();
+		files.clear();
+		names.clear();
+	}
+	
+	/*
+	 */
+	void Streamer::addBlob(const char *blob_name, const uint8_t (*blob)[256]) {
+		
+		AtomicLock atomic(lock);
+		
+		// blob name
+		String name = String(blob_name);
+		
+		// streamer file
+		uint32_t file_index = files.size();
+		StreamerFile &file = files.append();
+		file.name = name;
+		file.size = 0;
+		file.mtime = 0;
+		file.file_index = Maxu32;
+		file.archive_index = Maxu32;
+		file.blob = blob;
+		
+		// streamer names
+		if(!hasFlag(FlagCase)) name = name.lower();
+		names.append(name.reverse(), file_index);
+	}
+	
+	void Streamer::addBlob(const String &name, const uint8_t (*blob)[256]) {
+		addBlob(name.get(), blob);
+	}
+	
+	/*
+	 */
+	bool Streamer::loadArchive(const char *name) {
+		
+		// open source
+		Source source;
+		if(!source.open(name)) {
+			TS_LOGF(Error, "Streamer::loadArchive(): can't open \"%s\" file\n", name);
+			return false;
+		}
+		
+		// load archive
+		AtomicLock atomic(lock);
+		return load_archive(source, name);
+	}
+	
+	bool Streamer::loadArchive(const String &name) {
+		
+		// open source
+		Source source;
+		if(!source.open(name)) {
+			TS_LOGF(Error, "Streamer::loadArchive(): can't open \"%s\" file\n", name.get());
+			return false;
+		}
+		
+		// load archive
+		AtomicLock atomic(lock);
+		return load_archive(source, name.get());
+	}
+	
+	bool Streamer::load_archive(Stream &stream, const char *name, const char *type) {
+		
+		// load archive
+		AutoPtr<Archive> archive = makeAutoPtr(new Archive());
+		if(!archive->open(stream, type)) {
+			TS_LOGF(Error, "Streamer::load_archive(): can't open \"%s\" archive\n", name);
+			return false;
+		}
+		
+		// archive files
+		uint32_t archive_index = archives.size();
+		for(uint32_t i = 0; i < archive->getNumFiles(); i++) {
+			
+			// archive file
+			String name = archive->getFileName(i);
+			uint64_t mtime = archive->getFileMTime(i);
+			size_t size = archive->getFileSize(i);
+			
+			// streamer file
+			uint32_t file_index = files.size();
+			StreamerFile &file = files.append();
+			file.name = name;
+			file.size = size;
+			file.mtime = mtime;
+			file.file_index = i;
+			file.archive_index = archive_index;
+			file.blob = nullptr;
+			
+			// recursive archive
+			if(hasFlag(FlagRecursive) && ArchiveStream::check(name)) {
+				
+				// open source
+				Stream stream = archive->openFile(i);
+				if(!stream) {
+					TS_LOGF(Error, "Streamer::load_archive(): can't open \"%s\" file\n", name.get());
+					return false;
+				}
+				
+				// load archive
+				if(!load_archive(stream, name.get(), name.extension().get())) return false;
+			}
+			else {
+				
+				// streamer names
+				if(!hasFlag(FlagCase)) name = name.lower();
+				names.append(name.reverse(), file_index);
+			}
+		}
+		
+		// register archive
+		archives.append(archive);
+		
+		return true;
+	}
+	
+	/*
+	 */
+	bool Streamer::loadDirectory(const char *name) {
+		
+		// load directory
+		Directory directory;
+		if(!directory.open(name, true)) {
+			TS_LOGF(Error, "Streamer::loadDirectory(): can't open \"%s\" directory\n", name);
+			return false;
+		}
+		
+		AtomicLock atomic(lock);
+		
+		// directory files
+		for(uint32_t i = 0; i < directory.getNumFiles(); i++) {
+			
+			// directory file
+			String name = directory.getFileName(i);
+			uint64_t mtime = directory.getFileMTime(i);
+			size_t size = directory.getFileSize(i);
+			
+			// streamer file
+			uint32_t file_index = files.size();
+			StreamerFile &file = files.append();
+			file.name = directory.getName(); file.name += "/"; file.name += name;
+			file.size = size;
+			file.mtime = mtime;
+			file.file_index = Maxu32;
+			file.archive_index = Maxu32;
+			file.blob = nullptr;
+			
+			// recursive archive
+			if(hasFlag(FlagRecursive) && ArchiveStream::check(name)) {
+				
+				// open source
+				Source source;
+				if(!source.open(file.name, false)) {
+					TS_LOGF(Error, "Streamer::loadDirectory(): can't open \"%s\" file\n", name.get());
+					return false;
+				}
+				
+				// load archive
+				if(!load_archive(source, name.get())) return false;
+			}
+			else {
+				
+				// streamer names
+				if(!hasFlag(FlagCase)) name = name.lower();
+				names.append(name.reverse(), file_index);
+			}
+		}
+		
+		return true;
+	}
+	
+	bool Streamer::loadDirectory(const String &name) {
+		return loadDirectory(name.get());
+	}
+	
+	/*
+	 */
+	uint32_t Streamer::findFile(const char *file_name) {
+		
+		// file name
+		String name = String(file_name);
+		if(!hasFlag(FlagCase)) name = name.lower();
+		
+		// find name
+		name = name.reverse();
+		auto it = names.find(name);
+		if(!it) it = names.next(name);
+		if(it && it->key.begins(name.get())) return it->data;
+		return Maxu32;
+	}
+	
+	uint32_t Streamer::findFile(const String &name) {
+		return findFile(name.get());
+	}
+	
+	/*
+	 */
+	Stream Streamer::openFile(const char *name) {
+		uint32_t index = findFile(name);
+		if(index != Maxu32) return openFile(index);
+		return Stream::null;
+	}
+	
+	Stream Streamer::openFile(const String &name) {
+		uint32_t index = findFile(name);
+		if(index != Maxu32) return openFile(index);
+		return Stream::null;
+	}
+	
+	Stream Streamer::openFile(uint32_t index) {
+		
+		// streamer file
+		StreamerFile &file = files[index];
+		
+		// blob stream
+		if(file.blob) {
+			return Blob(file.blob);
+		}
+		
+		// archive stream
+		if(file.archive_index != Maxu32) {
+			Archive *archive = archives[file.archive_index].get();
+			Stream stream = archive->openFile(file.file_index);
+			if(stream) return stream;
+		}
+		
+		Source source;
+		
+		// directory stream
+		if(source.open(file.name, false)) {
+			return move(source);
+		}
+		
+		return Stream::null;
+	}
+	
+	/*
+	 */
+	Stream Streamer::open_callback(const char *name, void *data) {
+		
+		Streamer *streamer = (Streamer*)data;
+		
+		// streamer callback
+		uint32_t index = streamer->findFile(name);
+		if(index != Maxu32) {
+			Stream stream = streamer->openFile(index);
+			if(stream) return move(stream);
+		}
+		
+		// old source callback
+		if(streamer->open_func) {
+			Stream stream = streamer->open_func(name, streamer->callback_data);
+			if(stream) return move(stream);
+		}
+		
+		Source source;
+		
+		// direct stream
+		if(source.open(name, false)) return move(source);
+		
+		// empty stream
+		return Stream::null;
+	}
+	
+	bool Streamer::is_callback(const char *name, void *data) {
+		
+		Streamer *streamer = (Streamer*)data;
+		
+		// streamer callback
+		if(streamer->findFile(name) != Maxu32) return true;
+		
+		// old source callback
+		return (streamer->is_func && streamer->is_func(name, streamer->callback_data));
+	}
+}
