@@ -674,19 +674,19 @@
 			"title": "Shape",
 			"image": "images/interface/interface_shape.png",
 			"text": "This example renders cubic shape with applied Stroke and Gradient styles.",
-			"path": "tests/interface/shape",
+			"path": "samples/interface/shape",
 			"exec": "main",
-			"source": "tests/interface/shape/main.cpp",
-			"project": "tests/interface/shape/shape"
+			"source": "samples/interface/shape/main.cpp",
+			"project": "samples/interface/shape/shape"
 		},
 		"interface_svg": {
 			"title": "SVG Image",
 			"image": "images/interface/interface_svg.png",
 			"text": "Simple SVG image loading and rendering. CanvasShape class accepts SVG path string as input data.",
-			"path": "tests/interface/svg",
+			"path": "samples/interface/svg",
 			"exec": "main",
-			"source": "tests/interface/svg/main.cpp",
-			"project": "tests/interface/svg/svg"
+			"source": "samples/interface/svg/main.cpp",
+			"project": "samples/interface/svg/svg"
 		},
 		"interface_control": {
 			"title": "Custom Control",

@@ -10,9 +10,10 @@ Happy coding, and have fun creating with Tellusim!
 
 ## Licensing
 
-* Core SDK is free for education
-* Core SDK is free for companies with annual revenue < $200K
-* Any other licensing terms are negotiable
+* Tellusim Core SDK is free for education
+* Tellusim Core SDK is free for companies with annual revenue less than USD $200,000
+* Tellusim Core SDK may be used for evaluation purposes, limited to testing, learning, and other non-commercial experimentation
+* Any other use, including commercial or production deployment, requires a separate negotiated license with Tellusim Technologies Inc.
 
 For inquiries, visit: [Tellusim Services](https://tellusim.com/services/)
 
@@ -628,19 +629,19 @@ This plugin provides a framework for single-window Control-based applications.
 
 ---
 
-## [Shape](https://github.com/Tellusim/Tellusim_Core_SDK/tree/main/tests/interface/shape/)
+## [Shape](https://github.com/Tellusim/Tellusim_Core_SDK/tree/main/samples/interface/shape/)
 
 This example renders cubic shape with applied Stroke and Gradient styles.
 
-[![Shape](utils/browser/images/interface/interface_shape.png)](https://github.com/Tellusim/Tellusim_Core_SDK/tree/main/tests/interface/shape/)
+[![Shape](utils/browser/images/interface/interface_shape.png)](https://github.com/Tellusim/Tellusim_Core_SDK/tree/main/samples/interface/shape/)
 
 ---
 
-## [SVG Image](https://github.com/Tellusim/Tellusim_Core_SDK/tree/main/tests/interface/svg/)
+## [SVG Image](https://github.com/Tellusim/Tellusim_Core_SDK/tree/main/samples/interface/svg/)
 
 Simple SVG image loading and rendering. CanvasShape class accepts SVG path string as input data.
 
-[![SVG Image](utils/browser/images/interface/interface_svg.png)](https://github.com/Tellusim/Tellusim_Core_SDK/tree/main/tests/interface/svg/)
+[![SVG Image](utils/browser/images/interface/interface_svg.png)](https://github.com/Tellusim/Tellusim_Core_SDK/tree/main/samples/interface/svg/)
 
 ---
 
