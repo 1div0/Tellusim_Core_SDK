@@ -478,6 +478,8 @@ public class Window {
 	public boolean getMouseButton(Button.Enum button) { return get_mouse_button(self, button.value, false); }
 	public boolean getMouseButton(Button button, boolean clear) { return get_mouse_button(self, button.value, clear); }
 	public boolean getMouseButton(Button.Enum button, boolean clear) { return get_mouse_button(self, button.value, clear); }
+	public boolean wasMouseButtonReleased(Button button) { return was_mouse_button_released(self, button.value); }
+	public boolean wasMouseButtonReleased(Button.Enum button) { return was_mouse_button_released(self, button.value); }
 	public void releaseMouseButtons(Button buttons) { release_mouse_buttons(self, buttons.value); }
 	public void releaseMouseButtons(Button.Enum buttons) { release_mouse_buttons(self, buttons.value); }
 	public Button clearMouseButtons() { return new Button(clear_mouse_buttons(self)); }
@@ -501,6 +503,8 @@ public class Window {
 	public void setKeyboardKey(int key, boolean value) { set_keyboard_key(self, key, value); }
 	public boolean getKeyboardKey(int key) { return get_keyboard_key(self, key, false); }
 	public boolean getKeyboardKey(int key, boolean clear) { return get_keyboard_key(self, key, clear); }
+	public boolean wasKeyboardKeyPressed(int key) { return was_keyboard_key_pressed(self, key); }
+	public boolean wasKeyboardKeyReleased(int key) { return was_keyboard_key_released(self, key); }
 	public void setKeyboardPressedCallback(KeyboardPressedCallback func) { set_keyboard_pressed_callback(self, func); }
 	public void setKeyboardReleasedCallback(KeyboardReleasedCallback func) { set_keyboard_released_callback(self, func); }
 	public void setSizeChangedCallback(SizeChangedCallback func) { set_size_changed_callback(self, func); }
@@ -608,6 +612,7 @@ public class Window {
 	private static native int get_mouse_buttons(long self);
 	private static native boolean set_mouse_button(long self, int button, boolean value);
 	private static native boolean get_mouse_button(long self, int button, boolean clear);
+	private static native boolean was_mouse_button_released(long self, int button);
 	private static native void release_mouse_buttons(long self, int buttons);
 	private static native int clear_mouse_buttons(long self);
 	private static native boolean set_mouse_axis(long self, int axis, float value);
@@ -626,6 +631,8 @@ public class Window {
 	private static native void set_touch_changed_callback(long self, TouchChangedCallback func);
 	private static native void set_keyboard_key(long self, int key, boolean value);
 	private static native boolean get_keyboard_key(long self, int key, boolean clear);
+	private static native boolean was_keyboard_key_pressed(long self, int key);
+	private static native boolean was_keyboard_key_released(long self, int key);
 	private static native void set_keyboard_pressed_callback(long self, KeyboardPressedCallback func);
 	private static native void set_keyboard_released_callback(long self, KeyboardReleasedCallback func);
 	private static native void set_size_changed_callback(long self, SizeChangedCallback func);

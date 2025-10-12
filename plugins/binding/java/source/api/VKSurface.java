@@ -20,6 +20,8 @@ public class VKSurface extends Surface {
 	public long getQueue() { return get_queue(self); }
 	public long getCommand() { return get_command(self); }
 	public int getFamily() { return get_family(self); }
+	public void setSwapChain(long swap_chain) { set_swap_chain(self, swap_chain); }
+	public long getSwapChain() { return get_swap_chain(self); }
 	public void setColorImage(long image) { set_color_image(self, image); }
 	public void setDepthImage(long image) { set_depth_image(self, image); }
 	public long getColorImage() { return get_color_image(self); }
@@ -47,6 +49,8 @@ public class VKSurface extends Surface {
 	private static native long get_queue(long self);
 	private static native long get_command(long self);
 	private static native int get_family(long self);
+	private static native void set_swap_chain(long self, long swap_chain);
+	private static native long get_swap_chain(long self);
 	private static native void set_color_image(long self, long image);
 	private static native void set_depth_image(long self, long image);
 	private static native long get_color_image(long self);

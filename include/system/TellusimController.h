@@ -174,6 +174,8 @@ namespace Tellusim {
 			/// button state
 			void setButton(Button button, bool value);
 			bool getButton(Button button, bool clear = false) const;
+			bool wasButtonPressed(Button button) const;
+			bool wasButtonReleased(Button button) const;
 			
 			/// button value
 			void setButtonValue(Button button, float32_t value);

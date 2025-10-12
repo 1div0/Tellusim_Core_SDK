@@ -186,7 +186,7 @@ namespace Tellusim {
 	/**
 	 * The VKSurface class extends the Surface class to provide Vulkan-specific functionality for managing a rendering surface.
 	 * It includes methods for interacting with Vulkan instances, physical devices, logical devices, command buffers, and queues, enabling rendering operations in the context of Vulkan.
-	 * The class supports managing images, image views, render passes, and framebuffers, which are essential for rendering operations.
+	 * The class supports managing swap chains, images, image views, render passes, and framebuffers, which are essential for rendering operations.
 	 */
 	class TS_API VKSurface : public Surface {
 			
@@ -204,6 +204,10 @@ namespace Tellusim {
 			VkQueue getQueue() const;
 			VkCommandBuffer getCommand() const;
 			uint32_t getFamily() const;
+			
+			/// swap chain
+			void setSwapChain(VkSwapchainKHR swap_chain);
+			VkSwapchainKHR getSwapChain() const;
 			
 			/// image handles
 			void setColorImage(VkImage image);

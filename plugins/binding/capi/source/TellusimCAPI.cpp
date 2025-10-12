@@ -21409,6 +21409,14 @@ namespace Tellusim {
 		TS_ASSERT(self);
 		return ((VKSurface*)self)->getFamily();
 	}
+	TS_CAPI void TS_CCALL tsVKSurface_setSwapChain(TSVKSurface self, VkSwapchainKHR swap_chain) {
+		TS_ASSERT(self);
+		((VKSurface*)self)->setSwapChain(swap_chain);
+	}
+	TS_CAPI VkSwapchainKHR TS_CCALL tsVKSurface_getSwapChain(TSVKSurface self) {
+		TS_ASSERT(self);
+		return ((VKSurface*)self)->getSwapChain();
+	}
 	TS_CAPI void TS_CCALL tsVKSurface_setColorImage(TSVKSurface self, VkImage image) {
 		TS_ASSERT(self);
 		((VKSurface*)self)->setColorImage(image);
@@ -22036,6 +22044,10 @@ namespace Tellusim {
 		TS_ASSERT(self);
 		return ((Window*)self)->getMouseButton((Window::Button)button, (bool)clear);
 	}
+	TS_CAPI bool_t TS_CCALL tsWindow_wasMouseButtonReleased(TSWindow self, TS_WindowButton button) {
+		TS_ASSERT(self);
+		return ((Window*)self)->wasMouseButtonReleased((Window::Button)button);
+	}
 	TS_CAPI void TS_CCALL tsWindow_releaseMouseButtons(TSWindow self, TS_WindowButton buttons) {
 		TS_ASSERT(self);
 		((Window*)self)->releaseMouseButtons((Window::Button)buttons);
@@ -22107,6 +22119,14 @@ namespace Tellusim {
 	TS_CAPI bool_t TS_CCALL tsWindow_getKeyboardKey(TSWindow self, uint32_t key, bool_t clear) {
 		TS_ASSERT(self);
 		return ((Window*)self)->getKeyboardKey(key, (bool)clear);
+	}
+	TS_CAPI bool_t TS_CCALL tsWindow_wasKeyboardKeyPressed(TSWindow self, uint32_t key) {
+		TS_ASSERT(self);
+		return ((Window*)self)->wasKeyboardKeyPressed(key);
+	}
+	TS_CAPI bool_t TS_CCALL tsWindow_wasKeyboardKeyReleased(TSWindow self, uint32_t key) {
+		TS_ASSERT(self);
+		return ((Window*)self)->wasKeyboardKeyReleased(key);
 	}
 	TS_CAPI void TS_CCALL tsWindow_setKeyboardPressedCallback(TSWindow self, const TSWindowKeyboardPressedCallback func, void *data_) {
 		TS_ASSERT(self);
@@ -31515,6 +31535,14 @@ namespace Tellusim {
 	TS_CAPI bool_t TS_CCALL tsController_getButton(TSController self, TS_ControllerButton button, bool_t clear) {
 		TS_ASSERT(self);
 		return ((Controller*)self)->getButton((Controller::Button)button, (bool)clear);
+	}
+	TS_CAPI bool_t TS_CCALL tsController_wasButtonPressed(TSController self, TS_ControllerButton button) {
+		TS_ASSERT(self);
+		return ((Controller*)self)->wasButtonPressed((Controller::Button)button);
+	}
+	TS_CAPI bool_t TS_CCALL tsController_wasButtonReleased(TSController self, TS_ControllerButton button) {
+		TS_ASSERT(self);
+		return ((Controller*)self)->wasButtonReleased((Controller::Button)button);
 	}
 	TS_CAPI void TS_CCALL tsController_setButtonValue(TSController self, TS_ControllerButton button, float32_t value) {
 		TS_ASSERT(self);

@@ -187,10 +187,10 @@ namespace Tellusim {
 			virtual void release();
 			
 			/// clear window
-			bool clear(const Color &color);
+			virtual bool clear(const Color &color);
 			
 			/// grab window
-			bool grab(Image &image) const;
+			virtual bool grab(Image &image) const;
 			
 			/// render window
 			virtual bool render();
@@ -292,6 +292,7 @@ namespace Tellusim {
 			Button getMouseButtons() const;
 			bool setMouseButton(Button button, bool value);
 			bool getMouseButton(Button button, bool clear = false) const;
+			bool wasMouseButtonReleased(Button button) const;
 			void releaseMouseButtons(Button buttons);
 			Button clearMouseButtons();
 			
@@ -336,6 +337,8 @@ namespace Tellusim {
 			/// keyboard keys
 			void setKeyboardKey(uint32_t key, bool value);
 			bool getKeyboardKey(uint32_t key, bool clear = false) const;
+			bool wasKeyboardKeyPressed(uint32_t key) const;
+			bool wasKeyboardKeyReleased(uint32_t key) const;
 			
 			/// keyboard pressed callback
 			using KeyboardPressedCallback = Function<void(uint32_t key, uint32_t code)>;

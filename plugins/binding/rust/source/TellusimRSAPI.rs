@@ -31018,6 +31018,8 @@ impl VKSurface {
 	pub fn queue(&self) -> *const c_void { unsafe { tsVKSurface_getQueue(self.this) } }
 	pub fn command(&self) -> *const c_void { unsafe { tsVKSurface_getCommand(self.this) } }
 	pub fn family(&self) -> u32 { unsafe { tsVKSurface_getFamily(self.this) } }
+	pub fn set_swap_chain(&mut self, swap_chain: *const c_void) { unsafe { tsVKSurface_setSwapChain(self.this, swap_chain) } }
+	pub fn swap_chain(&self) -> *const c_void { unsafe { tsVKSurface_getSwapChain(self.this) } }
 	pub fn set_color_image(&mut self, image: *const c_void) { unsafe { tsVKSurface_setColorImage(self.this, image) } }
 	pub fn set_depth_image(&mut self, image: *const c_void) { unsafe { tsVKSurface_setDepthImage(self.this, image) } }
 	pub fn color_image(&self) -> *const c_void { unsafe { tsVKSurface_getColorImage(self.this) } }
@@ -31103,6 +31105,8 @@ extern "C" {
 	fn tsVKSurface_getQueue(this: *const c_void) -> *const c_void;
 	fn tsVKSurface_getCommand(this: *const c_void) -> *const c_void;
 	fn tsVKSurface_getFamily(this: *const c_void) -> u32;
+	fn tsVKSurface_setSwapChain(this: *mut c_void, swap_chain: *const c_void);
+	fn tsVKSurface_getSwapChain(this: *const c_void) -> *const c_void;
 	fn tsVKSurface_setColorImage(this: *mut c_void, image: *const c_void);
 	fn tsVKSurface_setDepthImage(this: *mut c_void, image: *const c_void);
 	fn tsVKSurface_getColorImage(this: *const c_void) -> *const c_void;
@@ -31542,6 +31546,7 @@ impl Window {
 	pub fn set_mouse_button(&mut self, button: WindowButton, value: bool) -> bool { unsafe { tsWindow_setMouseButton(self.this, button, if value {1} else {0}) != 0 } }
 	pub fn mouse_button(&self, button: WindowButton) -> bool { unsafe { tsWindow_getMouseButton(self.this, button, 0) != 0 } }
 	pub fn mouse_button_with_clear(&self, button: WindowButton, clear: bool) -> bool { unsafe { tsWindow_getMouseButton(self.this, button, if clear {1} else {0}) != 0 } }
+	pub fn was_mouse_button_released(&self, button: WindowButton) -> bool { unsafe { tsWindow_wasMouseButtonReleased(self.this, button) != 0 } }
 	pub fn release_mouse_buttons(&mut self, buttons: WindowButton) { unsafe { tsWindow_releaseMouseButtons(self.this, buttons) } }
 	pub fn clear_mouse_buttons(&mut self) -> WindowButton { unsafe { tsWindow_clearMouseButtons(self.this) } }
 	pub fn set_mouse_axis(&mut self, axis: WindowAxis, value: f32) -> bool { unsafe { tsWindow_setMouseAxis(self.this, axis, value) != 0 } }
@@ -31581,6 +31586,8 @@ impl Window {
 	pub fn set_keyboard_key(&mut self, key: u32, value: bool) { unsafe { tsWindow_setKeyboardKey(self.this, key, if value {1} else {0}) } }
 	pub fn keyboard_key(&self, key: u32) -> bool { unsafe { tsWindow_getKeyboardKey(self.this, key, 0) != 0 } }
 	pub fn keyboard_key_with_clear(&self, key: u32, clear: bool) -> bool { unsafe { tsWindow_getKeyboardKey(self.this, key, if clear {1} else {0}) != 0 } }
+	pub fn was_keyboard_key_pressed(&self, key: u32) -> bool { unsafe { tsWindow_wasKeyboardKeyPressed(self.this, key) != 0 } }
+	pub fn was_keyboard_key_released(&self, key: u32) -> bool { unsafe { tsWindow_wasKeyboardKeyReleased(self.this, key) != 0 } }
 	pub fn set_keyboard_pressed_callback<Func>(&mut self, func: Func) where Func: FnMut(u32, u32) {
 		let func = Box::leak(Box::new(func));
 		let func_ = window_keyboard_pressed_callback_func::<Func>;
@@ -31758,6 +31765,7 @@ extern "C" {
 	fn tsWindow_getMouseButtons(this: *const c_void) -> WindowButton;
 	fn tsWindow_setMouseButton(this: *mut c_void, button: WindowButton, value: i32) -> i32;
 	fn tsWindow_getMouseButton(this: *const c_void, button: WindowButton, clear: i32) -> i32;
+	fn tsWindow_wasMouseButtonReleased(this: *const c_void, button: WindowButton) -> i32;
 	fn tsWindow_releaseMouseButtons(this: *mut c_void, buttons: WindowButton);
 	fn tsWindow_clearMouseButtons(this: *mut c_void) -> WindowButton;
 	fn tsWindow_setMouseAxis(this: *mut c_void, axis: WindowAxis, value: f32) -> i32;
@@ -31776,6 +31784,8 @@ extern "C" {
 	fn tsWindow_setTouchChangedCallback(this: *mut c_void, func: WindowTouchChangedCallback, data_: *mut c_void);
 	fn tsWindow_setKeyboardKey(this: *mut c_void, key: u32, value: i32);
 	fn tsWindow_getKeyboardKey(this: *const c_void, key: u32, clear: i32) -> i32;
+	fn tsWindow_wasKeyboardKeyPressed(this: *const c_void, key: u32) -> i32;
+	fn tsWindow_wasKeyboardKeyReleased(this: *const c_void, key: u32) -> i32;
 	fn tsWindow_setKeyboardPressedCallback(this: *mut c_void, func: WindowKeyboardPressedCallback, data_: *mut c_void);
 	fn tsWindow_setKeyboardReleasedCallback(this: *mut c_void, func: WindowKeyboardReleasedCallback, data_: *mut c_void);
 	fn tsWindow_setSizeChangedCallback(this: *mut c_void, func: WindowSizeChangedCallback, data_: *mut c_void);
@@ -42308,6 +42318,8 @@ impl Controller {
 	pub fn set_button(&mut self, button: ControllerButton, value: bool) { unsafe { tsController_setButton(self.this, button, if value {1} else {0}) } }
 	pub fn button(&self, button: ControllerButton) -> bool { unsafe { tsController_getButton(self.this, button, 0) != 0 } }
 	pub fn button_with_clear(&self, button: ControllerButton, clear: bool) -> bool { unsafe { tsController_getButton(self.this, button, if clear {1} else {0}) != 0 } }
+	pub fn was_button_pressed(&self, button: ControllerButton) -> bool { unsafe { tsController_wasButtonPressed(self.this, button) != 0 } }
+	pub fn was_button_released(&self, button: ControllerButton) -> bool { unsafe { tsController_wasButtonReleased(self.this, button) != 0 } }
 	pub fn set_button_value(&mut self, button: ControllerButton, value: f32) { unsafe { tsController_setButtonValue(self.this, button, value) } }
 	pub fn button_value(&self, button: ControllerButton) -> f32 { unsafe { tsController_getButtonValue(self.this, button) } }
 	pub fn set_motor_name(&mut self, motor: ControllerMotor, name: &str) {
@@ -42419,6 +42431,8 @@ extern "C" {
 	fn tsController_findButton(this: *const c_void, name: *const c_char) -> ControllerButton;
 	fn tsController_setButton(this: *mut c_void, button: ControllerButton, value: i32);
 	fn tsController_getButton(this: *const c_void, button: ControllerButton, clear: i32) -> i32;
+	fn tsController_wasButtonPressed(this: *const c_void, button: ControllerButton) -> i32;
+	fn tsController_wasButtonReleased(this: *const c_void, button: ControllerButton) -> i32;
 	fn tsController_setButtonValue(this: *mut c_void, button: ControllerButton, value: f32);
 	fn tsController_getButtonValue(this: *const c_void, button: ControllerButton) -> f32;
 	fn tsController_setMotorName(this: *mut c_void, motor: ControllerMotor, name: *const c_char);

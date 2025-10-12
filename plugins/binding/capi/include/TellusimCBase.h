@@ -569,6 +569,7 @@ typedef struct VkQueue_T *VkQueue;
 typedef struct VkCommandBuffer_T *VkCommandBuffer;
 
 #if defined(TS_X64) || defined(TS_ARM64)
+	typedef struct VkSwapchainKHR_T *VkSwapchainKHR;
 	typedef struct VkShaderModule_T *VkShaderModule;
 	typedef struct VkDescriptorSet_T *VkDescriptorSet;
 	typedef struct VkRenderPass_T *VkRenderPass;
@@ -581,6 +582,7 @@ typedef struct VkCommandBuffer_T *VkCommandBuffer;
 	typedef struct VkBufferView_T *VkBufferView;
 	typedef struct VkAccelerationStructureKHR_T *VkAccelerationStructureKHR;
 #else
+	typedef uint64_t VkSwapchainKHR;
 	typedef uint64_t VkShaderModule;
 	typedef uint64_t VkDescriptorSet;
 	typedef uint64_t VkRenderPass;

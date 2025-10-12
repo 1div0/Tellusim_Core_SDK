@@ -311,7 +311,7 @@ Hardware accelerated raytracing shadows. An API with Ray Query support is requir
 
 Compute class for simple compute shader texture generation.
 
-[![Platform Compute](utils/browser/images/platform/platform_compute.png)](https://github.com/Tellusim/Tellusim_Core_SDK/tree/main/samples/platform/compute/)
+[![Platform Compute](utils/browser/images/platform/platform_compute.jpg)](https://github.com/Tellusim/Tellusim_Core_SDK/tree/main/samples/platform/compute/)
 
 ---
 
@@ -347,11 +347,11 @@ This example shows how Vulkan can map files into GPU buffers, allowing the GPU t
 
 ---
 
-## [Platform Mapped](https://github.com/Tellusim/Tellusim_Core_SDK/tree/main/samples/platform/formats/)
+## [Platform Formats](https://github.com/Tellusim/Tellusim_Core_SDK/tree/main/samples/platform/formats/)
 
 This example shows how mixed texture formats can reduce video memory consumption. Image format conversion is performed by the Image interface.
 
-[![Platform Mapped](utils/browser/images/platform/platform_formats.jpg)](https://github.com/Tellusim/Tellusim_Core_SDK/tree/main/samples/platform/formats/)
+[![Platform Formats](utils/browser/images/platform/platform_formats.jpg)](https://github.com/Tellusim/Tellusim_Core_SDK/tree/main/samples/platform/formats/)
 
 ---
 

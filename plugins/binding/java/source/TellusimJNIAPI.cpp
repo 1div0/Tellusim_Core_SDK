@@ -18120,6 +18120,12 @@ namespace Tellusim {
 	static jint vk_surface_get_family(TS_JNI_ARGS, jlong self) {
 		return toVKSurface(self).getFamily();
 	}
+	static void vk_surface_set_swap_chain(TS_JNI_ARGS, jlong self, jlong swap_chain) {
+		toVKSurface(self).setSwapChain((VkSwapchainKHR)swap_chain);
+	}
+	static jlong vk_surface_get_swap_chain(TS_JNI_ARGS, jlong self) {
+		return (jlong)toVKSurface(self).getSwapChain();
+	}
 	static void vk_surface_set_color_image(TS_JNI_ARGS, jlong self, jlong image) {
 		toVKSurface(self).setColorImage((VkImage)image);
 	}
@@ -18175,6 +18181,8 @@ namespace Tellusim {
 		{ (char*)"get_queue", (char*)"(J)J", (void*)vk_surface_get_queue },
 		{ (char*)"get_command", (char*)"(J)J", (void*)vk_surface_get_command },
 		{ (char*)"get_family", (char*)"(J)I", (void*)vk_surface_get_family },
+		{ (char*)"set_swap_chain", (char*)"(JJ)V", (void*)vk_surface_set_swap_chain },
+		{ (char*)"get_swap_chain", (char*)"(J)J", (void*)vk_surface_get_swap_chain },
 		{ (char*)"set_color_image", (char*)"(JJ)V", (void*)vk_surface_set_color_image },
 		{ (char*)"set_depth_image", (char*)"(JJ)V", (void*)vk_surface_set_depth_image },
 		{ (char*)"get_color_image", (char*)"(J)J", (void*)vk_surface_get_color_image },
@@ -18946,6 +18954,9 @@ namespace Tellusim {
 	static jboolean window_get_mouse_button(TS_JNI_ARGS, jlong self, jint button, jboolean clear) {
 		return toWindow(self).getMouseButton((Window::Button)button, (bool)clear);
 	}
+	static jboolean window_was_mouse_button_released(TS_JNI_ARGS, jlong self, jint button) {
+		return toWindow(self).wasMouseButtonReleased((Window::Button)button);
+	}
 	static void window_release_mouse_buttons(TS_JNI_ARGS, jlong self, jint buttons) {
 		toWindow(self).releaseMouseButtons((Window::Button)buttons);
 	}
@@ -18999,6 +19010,12 @@ namespace Tellusim {
 	}
 	static jboolean window_get_keyboard_key(TS_JNI_ARGS, jlong self, jint key, jboolean clear) {
 		return toWindow(self).getKeyboardKey((uint32_t)key, (bool)clear);
+	}
+	static jboolean window_was_keyboard_key_pressed(TS_JNI_ARGS, jlong self, jint key) {
+		return toWindow(self).wasKeyboardKeyPressed((uint32_t)key);
+	}
+	static jboolean window_was_keyboard_key_released(TS_JNI_ARGS, jlong self, jint key) {
+		return toWindow(self).wasKeyboardKeyReleased((uint32_t)key);
 	}
 	static void window_set_keyboard_pressed_callback(TS_JNI_ARGS, jlong self, jobject func) {
 		toWindow(self).setKeyboardPressedCallback(make_window_keyboard_pressed_callback(env, func));
@@ -19140,6 +19157,7 @@ namespace Tellusim {
 		{ (char*)"get_mouse_buttons", (char*)"(J)I", (void*)window_get_mouse_buttons },
 		{ (char*)"set_mouse_button", (char*)"(JIZ)Z", (void*)window_set_mouse_button },
 		{ (char*)"get_mouse_button", (char*)"(JIZ)Z", (void*)window_get_mouse_button },
+		{ (char*)"was_mouse_button_released", (char*)"(JI)Z", (void*)window_was_mouse_button_released },
 		{ (char*)"release_mouse_buttons", (char*)"(JI)V", (void*)window_release_mouse_buttons },
 		{ (char*)"clear_mouse_buttons", (char*)"(J)I", (void*)window_clear_mouse_buttons },
 		{ (char*)"set_mouse_axis", (char*)"(JIF)Z", (void*)window_set_mouse_axis },
@@ -19158,6 +19176,8 @@ namespace Tellusim {
 		{ (char*)"set_touch_changed_callback", (char*)"(JL" TS_JNI_PREFIX "Window$TouchChangedCallback;)V", (void*)window_set_touch_changed_callback },
 		{ (char*)"set_keyboard_key", (char*)"(JIZ)V", (void*)window_set_keyboard_key },
 		{ (char*)"get_keyboard_key", (char*)"(JIZ)Z", (void*)window_get_keyboard_key },
+		{ (char*)"was_keyboard_key_pressed", (char*)"(JI)Z", (void*)window_was_keyboard_key_pressed },
+		{ (char*)"was_keyboard_key_released", (char*)"(JI)Z", (void*)window_was_keyboard_key_released },
 		{ (char*)"set_keyboard_pressed_callback", (char*)"(JL" TS_JNI_PREFIX "Window$KeyboardPressedCallback;)V", (void*)window_set_keyboard_pressed_callback },
 		{ (char*)"set_keyboard_released_callback", (char*)"(JL" TS_JNI_PREFIX "Window$KeyboardReleasedCallback;)V", (void*)window_set_keyboard_released_callback },
 		{ (char*)"set_size_changed_callback", (char*)"(JL" TS_JNI_PREFIX "Window$SizeChangedCallback;)V", (void*)window_set_size_changed_callback },
@@ -29119,6 +29139,12 @@ namespace Tellusim {
 	static jboolean controller_get_button(TS_JNI_ARGS, jlong self, jint button, jboolean clear) {
 		return toController(self).getButton((Controller::Button)button, (bool)clear);
 	}
+	static jboolean controller_was_button_pressed(TS_JNI_ARGS, jlong self, jint button) {
+		return toController(self).wasButtonPressed((Controller::Button)button);
+	}
+	static jboolean controller_was_button_released(TS_JNI_ARGS, jlong self, jint button) {
+		return toController(self).wasButtonReleased((Controller::Button)button);
+	}
 	static void controller_set_button_value(TS_JNI_ARGS, jlong self, jint button, jfloat value) {
 		toController(self).setButtonValue((Controller::Button)button, value);
 	}
@@ -29211,6 +29237,8 @@ namespace Tellusim {
 		{ (char*)"find_button", (char*)"(JLjava/lang/String;)I", (void*)controller_find_button },
 		{ (char*)"set_button", (char*)"(JIZ)V", (void*)controller_set_button },
 		{ (char*)"get_button", (char*)"(JIZ)Z", (void*)controller_get_button },
+		{ (char*)"was_button_pressed", (char*)"(JI)Z", (void*)controller_was_button_pressed },
+		{ (char*)"was_button_released", (char*)"(JI)Z", (void*)controller_was_button_released },
 		{ (char*)"set_button_value", (char*)"(JIF)V", (void*)controller_set_button_value },
 		{ (char*)"get_button_value", (char*)"(JI)F", (void*)controller_get_button_value },
 		{ (char*)"set_motor_name", (char*)"(JILjava/lang/String;)V", (void*)controller_set_motor_name },

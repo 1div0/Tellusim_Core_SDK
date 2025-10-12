@@ -259,6 +259,10 @@ public class Controller {
 	public boolean getButton(Button.Enum button) { return get_button(self, button.value, false); }
 	public boolean getButton(Button button, boolean clear) { return get_button(self, button.value, clear); }
 	public boolean getButton(Button.Enum button, boolean clear) { return get_button(self, button.value, clear); }
+	public boolean wasButtonPressed(Button button) { return was_button_pressed(self, button.value); }
+	public boolean wasButtonPressed(Button.Enum button) { return was_button_pressed(self, button.value); }
+	public boolean wasButtonReleased(Button button) { return was_button_released(self, button.value); }
+	public boolean wasButtonReleased(Button.Enum button) { return was_button_released(self, button.value); }
 	public void setButtonValue(Button button, float value) { set_button_value(self, button.value, value); }
 	public void setButtonValue(Button.Enum button, float value) { set_button_value(self, button.value, value); }
 	public float getButtonValue(Button button) { return get_button_value(self, button.value); }
@@ -330,6 +334,8 @@ public class Controller {
 	private static native int find_button(long self, String name);
 	private static native void set_button(long self, int button, boolean value);
 	private static native boolean get_button(long self, int button, boolean clear);
+	private static native boolean was_button_pressed(long self, int button);
+	private static native boolean was_button_released(long self, int button);
 	private static native void set_button_value(long self, int button, float value);
 	private static native float get_button_value(long self, int button);
 	private static native void set_motor_name(long self, int motor, String name);

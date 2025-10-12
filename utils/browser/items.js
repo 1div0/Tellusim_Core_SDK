@@ -318,7 +318,7 @@
 		},
 		"platform_compute": {
 			"title": "Platform Compute",
-			"image": "images/platform/platform_compute.png",
+			"image": "images/platform/platform_compute.jpg",
 			"text": "Compute class for simple compute shader texture generation.",
 			"path": "samples/platform/compute",
 			"exec": "main",
@@ -363,7 +363,7 @@
 			"project": "samples/platform/mapped/mapped"
 		},
 		"platform_formats": {
-			"title": "Platform Mapped",
+			"title": "Platform Formats",
 			"image": "images/platform/platform_formats.jpg",
 			"text": "This example shows how mixed texture formats can reduce video memory consumption. Image format conversion is performed by the Image interface.",
 			"path": "samples/platform/formats",

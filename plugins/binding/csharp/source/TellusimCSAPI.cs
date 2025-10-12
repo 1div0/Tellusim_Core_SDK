@@ -11215,6 +11215,8 @@ namespace Tellusim {
 		public IntPtr getQueue() { return tsVKSurface_getQueue(self); }
 		public IntPtr getCommand() { return tsVKSurface_getCommand(self); }
 		public uint getFamily() { return tsVKSurface_getFamily(self); }
+		public void setSwapChain(IntPtr swap_chain) { tsVKSurface_setSwapChain(self, swap_chain); }
+		public IntPtr getSwapChain() { return tsVKSurface_getSwapChain(self); }
 		public void setColorImage(IntPtr image) { tsVKSurface_setColorImage(self, image); }
 		public void setDepthImage(IntPtr image) { tsVKSurface_setDepthImage(self, image); }
 		public IntPtr getColorImage() { return tsVKSurface_getColorImage(self); }
@@ -11255,6 +11257,8 @@ namespace Tellusim {
 		[DllImport(Base.Import)] private static extern IntPtr tsVKSurface_getQueue(HandleRef self);
 		[DllImport(Base.Import)] private static extern IntPtr tsVKSurface_getCommand(HandleRef self);
 		[DllImport(Base.Import)] private static extern uint tsVKSurface_getFamily(HandleRef self);
+		[DllImport(Base.Import)] private static extern void tsVKSurface_setSwapChain(HandleRef self, IntPtr swap_chain);
+		[DllImport(Base.Import)] private static extern IntPtr tsVKSurface_getSwapChain(HandleRef self);
 		[DllImport(Base.Import)] private static extern void tsVKSurface_setColorImage(HandleRef self, IntPtr image);
 		[DllImport(Base.Import)] private static extern void tsVKSurface_setDepthImage(HandleRef self, IntPtr image);
 		[DllImport(Base.Import)] private static extern IntPtr tsVKSurface_getColorImage(HandleRef self);
@@ -11582,25 +11586,26 @@ namespace Tellusim {
 		public Button getMouseButtons() { return tsWindow_getMouseButtons(self); }
 		public bool setMouseButton(Button button, bool value) { return tsWindow_setMouseButton(self, button, value); }
 		public bool getMouseButton(Button button, bool clear = false) { return tsWindow_getMouseButton(self, button, clear); }
+		public bool wasMouseButtonReleased(Button button) { return tsWindow_wasMouseButtonReleased(self, button); }
 		public void releaseMouseButtons(Button buttons) { tsWindow_releaseMouseButtons(self, buttons); }
 		public Button clearMouseButtons() { return tsWindow_clearMouseButtons(self); }
 		public bool setMouseAxis(Axis axis, float value) { return tsWindow_setMouseAxis(self, axis, value); }
 		public float getMouseAxis(Axis axis) { return tsWindow_getMouseAxis(self, axis); }
 		public float clearMouseAxis(Axis axis) { return tsWindow_clearMouseAxis(self, axis); }
 		public void setMousePressedCallback(MousePressedCallback func, IntPtr data = new IntPtr()) {
-			if(func != null) MousePressedCallback_84 = GCHandle.Alloc(func);
+			if(func != null) MousePressedCallback_85 = GCHandle.Alloc(func);
 			tsWindow_setMousePressedCallback(self, Base.getFunc(func), data);
 		}
 		public void setMouseReleasedCallback(MouseReleasedCallback func, IntPtr data = new IntPtr()) {
-			if(func != null) MouseReleasedCallback_86 = GCHandle.Alloc(func);
+			if(func != null) MouseReleasedCallback_87 = GCHandle.Alloc(func);
 			tsWindow_setMouseReleasedCallback(self, Base.getFunc(func), data);
 		}
 		public void setMouseChangedCallback(MouseChangedCallback func, IntPtr data = new IntPtr()) {
-			if(func != null) MouseChangedCallback_88 = GCHandle.Alloc(func);
+			if(func != null) MouseChangedCallback_89 = GCHandle.Alloc(func);
 			tsWindow_setMouseChangedCallback(self, Base.getFunc(func), data);
 		}
 		public void setMouseRotatedCallback(MouseRotatedCallback func, IntPtr data = new IntPtr()) {
-			if(func != null) MouseRotatedCallback_90 = GCHandle.Alloc(func);
+			if(func != null) MouseRotatedCallback_91 = GCHandle.Alloc(func);
 			tsWindow_setMouseRotatedCallback(self, Base.getFunc(func), data);
 		}
 		public uint getNumTouches() { return tsWindow_getNumTouches(self); }
@@ -11610,49 +11615,51 @@ namespace Tellusim {
 		public uint findTouch(int x, int y) { return tsWindow_findTouch(self, x, y); }
 		public void clearTouches() { tsWindow_clearTouches(self); }
 		public void setTouchChangedCallback(TouchChangedCallback func, IntPtr data = new IntPtr()) {
-			if(func != null) TouchChangedCallback_98 = GCHandle.Alloc(func);
+			if(func != null) TouchChangedCallback_99 = GCHandle.Alloc(func);
 			tsWindow_setTouchChangedCallback(self, Base.getFunc(func), data);
 		}
 		public void setKeyboardKey(uint key, bool value) { tsWindow_setKeyboardKey(self, key, value); }
 		public bool getKeyboardKey(uint key, bool clear = false) { return tsWindow_getKeyboardKey(self, key, clear); }
+		public bool wasKeyboardKeyPressed(uint key) { return tsWindow_wasKeyboardKeyPressed(self, key); }
+		public bool wasKeyboardKeyReleased(uint key) { return tsWindow_wasKeyboardKeyReleased(self, key); }
 		public void setKeyboardPressedCallback(KeyboardPressedCallback func, IntPtr data = new IntPtr()) {
-			if(func != null) KeyboardPressedCallback_102 = GCHandle.Alloc(func);
+			if(func != null) KeyboardPressedCallback_105 = GCHandle.Alloc(func);
 			tsWindow_setKeyboardPressedCallback(self, Base.getFunc(func), data);
 		}
 		public void setKeyboardReleasedCallback(KeyboardReleasedCallback func, IntPtr data = new IntPtr()) {
-			if(func != null) KeyboardReleasedCallback_104 = GCHandle.Alloc(func);
+			if(func != null) KeyboardReleasedCallback_107 = GCHandle.Alloc(func);
 			tsWindow_setKeyboardReleasedCallback(self, Base.getFunc(func), data);
 		}
 		public void setSizeChangedCallback(SizeChangedCallback func, IntPtr data = new IntPtr()) {
-			if(func != null) SizeChangedCallback_106 = GCHandle.Alloc(func);
+			if(func != null) SizeChangedCallback_109 = GCHandle.Alloc(func);
 			tsWindow_setSizeChangedCallback(self, Base.getFunc(func), data);
 		}
 		public void setFocusChangedCallback(FocusChangedCallback func, IntPtr data = new IntPtr()) {
-			if(func != null) FocusChangedCallback_108 = GCHandle.Alloc(func);
+			if(func != null) FocusChangedCallback_111 = GCHandle.Alloc(func);
 			tsWindow_setFocusChangedCallback(self, Base.getFunc(func), data);
 		}
 		public void setCloseClickedCallback(CloseClickedCallback func, IntPtr data = new IntPtr()) {
-			if(func != null) CloseClickedCallback_110 = GCHandle.Alloc(func);
+			if(func != null) CloseClickedCallback_113 = GCHandle.Alloc(func);
 			tsWindow_setCloseClickedCallback(self, Base.getFunc(func), data);
 		}
 		public void setPauseChangedCallback(PauseChangedCallback func, IntPtr data = new IntPtr()) {
-			if(func != null) PauseChangedCallback_112 = GCHandle.Alloc(func);
+			if(func != null) PauseChangedCallback_115 = GCHandle.Alloc(func);
 			tsWindow_setPauseChangedCallback(self, Base.getFunc(func), data);
 		}
 		public void setFileDroppedCallback(FileDroppedCallback func, IntPtr data = new IntPtr()) {
-			if(func != null) FileDroppedCallback_114 = GCHandle.Alloc(func);
+			if(func != null) FileDroppedCallback_117 = GCHandle.Alloc(func);
 			tsWindow_setFileDroppedCallback(self, Base.getFunc(func), data);
 		}
 		public void setUpdateCallback(UpdateCallback func, IntPtr data = new IntPtr()) {
-			if(func != null) UpdateCallback_116 = GCHandle.Alloc(func);
+			if(func != null) UpdateCallback_119 = GCHandle.Alloc(func);
 			tsWindow_setUpdateCallback(self, Base.getFunc(func), data);
 		}
 		public void setPresentCallback(PresentCallback func, IntPtr data = new IntPtr()) {
-			if(func != null) PresentCallback_118 = GCHandle.Alloc(func);
+			if(func != null) PresentCallback_121 = GCHandle.Alloc(func);
 			tsWindow_setPresentCallback(self, Base.getFunc(func), data);
 		}
 		public bool run(MainLoopCallback func, IntPtr data = new IntPtr()) {
-			if(func != null) MainLoopCallback_121 = GCHandle.Alloc(func);
+			if(func != null) MainLoopCallback_124 = GCHandle.Alloc(func);
 			return tsWindow_run(self, Base.getFunc(func), data);
 		}
 		public bool isRunning() { return tsWindow_isRunning(self); }
@@ -11660,21 +11667,21 @@ namespace Tellusim {
 		public bool setCopyText(string text) { return tsWindow_setCopyText_s(self, text); }
 		public bool setCopyText(String text) { return tsWindow_setCopyText_cS(self, text.getSelf()); }
 		public string getPasteText() { return Base.getString(tsWindow_getPasteText(self)); }
-		private GCHandle MousePressedCallback_84;
-		private GCHandle MouseReleasedCallback_86;
-		private GCHandle MouseChangedCallback_88;
-		private GCHandle MouseRotatedCallback_90;
-		private GCHandle TouchChangedCallback_98;
-		private GCHandle KeyboardPressedCallback_102;
-		private GCHandle KeyboardReleasedCallback_104;
-		private GCHandle SizeChangedCallback_106;
-		private GCHandle FocusChangedCallback_108;
-		private GCHandle CloseClickedCallback_110;
-		private GCHandle PauseChangedCallback_112;
-		private GCHandle FileDroppedCallback_114;
-		private GCHandle UpdateCallback_116;
-		private GCHandle PresentCallback_118;
-		private GCHandle MainLoopCallback_121;
+		private GCHandle MousePressedCallback_85;
+		private GCHandle MouseReleasedCallback_87;
+		private GCHandle MouseChangedCallback_89;
+		private GCHandle MouseRotatedCallback_91;
+		private GCHandle TouchChangedCallback_99;
+		private GCHandle KeyboardPressedCallback_105;
+		private GCHandle KeyboardReleasedCallback_107;
+		private GCHandle SizeChangedCallback_109;
+		private GCHandle FocusChangedCallback_111;
+		private GCHandle CloseClickedCallback_113;
+		private GCHandle PauseChangedCallback_115;
+		private GCHandle FileDroppedCallback_117;
+		private GCHandle UpdateCallback_119;
+		private GCHandle PresentCallback_121;
+		private GCHandle MainLoopCallback_124;
 		public override string ToString() { return "Tellusim.Window: Valid: " + tsWindow_isValidPtr(self) + "; Owner: " + tsWindow_isOwnerPtr(self) + "; Const: " + tsWindow_isConstPtr(self) + "; Count: " + tsWindow_getCountPtr(self) + "; Internal: 0x" + tsWindow_getInternalPtr(self).ToString("x8") + "; Self: 0x" + self.Handle.ToString("x8") + "; Owner: " + owner; }
 		public static implicit operator bool(Window ptr) { return (ptr != null && tsWindow_isValidPtr(ptr.getSelf())); }
 		[DllImport(Base.Import)] private static extern IntPtr tsWindow_new();
@@ -11769,6 +11776,7 @@ namespace Tellusim {
 		[DllImport(Base.Import)] private static extern Button tsWindow_getMouseButtons(HandleRef self);
 		[DllImport(Base.Import)] private static extern bool tsWindow_setMouseButton(HandleRef self, Button button, bool value);
 		[DllImport(Base.Import)] private static extern bool tsWindow_getMouseButton(HandleRef self, Button button, bool clear);
+		[DllImport(Base.Import)] private static extern bool tsWindow_wasMouseButtonReleased(HandleRef self, Button button);
 		[DllImport(Base.Import)] private static extern void tsWindow_releaseMouseButtons(HandleRef self, Button buttons);
 		[DllImport(Base.Import)] private static extern Button tsWindow_clearMouseButtons(HandleRef self);
 		[DllImport(Base.Import)] private static extern bool tsWindow_setMouseAxis(HandleRef self, Axis axis, float value);
@@ -11787,6 +11795,8 @@ namespace Tellusim {
 		[DllImport(Base.Import)] private static extern void tsWindow_setTouchChangedCallback(HandleRef self, IntPtr func, IntPtr data_);
 		[DllImport(Base.Import)] private static extern void tsWindow_setKeyboardKey(HandleRef self, uint key, bool value);
 		[DllImport(Base.Import)] private static extern bool tsWindow_getKeyboardKey(HandleRef self, uint key, bool clear);
+		[DllImport(Base.Import)] private static extern bool tsWindow_wasKeyboardKeyPressed(HandleRef self, uint key);
+		[DllImport(Base.Import)] private static extern bool tsWindow_wasKeyboardKeyReleased(HandleRef self, uint key);
 		[DllImport(Base.Import)] private static extern void tsWindow_setKeyboardPressedCallback(HandleRef self, IntPtr func, IntPtr data_);
 		[DllImport(Base.Import)] private static extern void tsWindow_setKeyboardReleasedCallback(HandleRef self, IntPtr func, IntPtr data_);
 		[DllImport(Base.Import)] private static extern void tsWindow_setSizeChangedCallback(HandleRef self, IntPtr func, IntPtr data_);
@@ -17650,6 +17660,8 @@ namespace Tellusim {
 		public Button findButton(string name) { return tsController_findButton(self, name); }
 		public void setButton(Button button, bool value) { tsController_setButton(self, button, value); }
 		public bool getButton(Button button, bool clear = false) { return tsController_getButton(self, button, clear); }
+		public bool wasButtonPressed(Button button) { return tsController_wasButtonPressed(self, button); }
+		public bool wasButtonReleased(Button button) { return tsController_wasButtonReleased(self, button); }
 		public void setButtonValue(Button button, float value) { tsController_setButtonValue(self, button, value); }
 		public float getButtonValue(Button button) { return tsController_getButtonValue(self, button); }
 		public void setMotorName(Motor motor, string name) { tsController_setMotorName(self, motor, name); }
@@ -17660,31 +17672,31 @@ namespace Tellusim {
 		public void setButtonPressedCallback(ButtonPressedCallback func, IntPtr data = new IntPtr()) {
 			Controller.ButtonPressedCallback_ func_ = null;
 			if(func != null) func_ = (IntPtr controller_, Button button_, IntPtr data_) => { func(new Controller(controller_), button_, data_); };
-			if(func_ != null) ButtonPressedCallback_48 = GCHandle.Alloc(func_);
+			if(func_ != null) ButtonPressedCallback_50 = GCHandle.Alloc(func_);
 			tsController_setButtonPressedCallback(self, Base.getFunc(func_), data);
 		}
 		public void setButtonReleasedCallback(ButtonReleasedCallback func, IntPtr data = new IntPtr()) {
 			Controller.ButtonReleasedCallback_ func_ = null;
 			if(func != null) func_ = (IntPtr controller_, Button button_, IntPtr data_) => { func(new Controller(controller_), button_, data_); };
-			if(func_ != null) ButtonReleasedCallback_50 = GCHandle.Alloc(func_);
+			if(func_ != null) ButtonReleasedCallback_52 = GCHandle.Alloc(func_);
 			tsController_setButtonReleasedCallback(self, Base.getFunc(func_), data);
 		}
 		public void setConnectedCallback(ConnectedCallback func, IntPtr data = new IntPtr()) {
 			Controller.ConnectedCallback_ func_ = null;
 			if(func != null) func_ = (IntPtr controller_, IntPtr data_) => { func(new Controller(controller_), data_); };
-			if(func_ != null) ConnectedCallback_52 = GCHandle.Alloc(func_);
+			if(func_ != null) ConnectedCallback_54 = GCHandle.Alloc(func_);
 			tsController_setConnectedCallback(self, Base.getFunc(func_), data);
 		}
 		public void setDisconnectedCallback(DisconnectedCallback func, IntPtr data = new IntPtr()) {
 			Controller.DisconnectedCallback_ func_ = null;
 			if(func != null) func_ = (IntPtr controller_, IntPtr data_) => { func(new Controller(controller_), data_); };
-			if(func_ != null) DisconnectedCallback_54 = GCHandle.Alloc(func_);
+			if(func_ != null) DisconnectedCallback_56 = GCHandle.Alloc(func_);
 			tsController_setDisconnectedCallback(self, Base.getFunc(func_), data);
 		}
-		private GCHandle ButtonPressedCallback_48;
-		private GCHandle ButtonReleasedCallback_50;
-		private GCHandle ConnectedCallback_52;
-		private GCHandle DisconnectedCallback_54;
+		private GCHandle ButtonPressedCallback_50;
+		private GCHandle ButtonReleasedCallback_52;
+		private GCHandle ConnectedCallback_54;
+		private GCHandle DisconnectedCallback_56;
 		public override string ToString() { return "Tellusim.Controller: Valid: " + tsController_isValidPtr(self) + "; Owner: " + tsController_isOwnerPtr(self) + "; Const: " + tsController_isConstPtr(self) + "; Count: " + tsController_getCountPtr(self) + "; Internal: 0x" + tsController_getInternalPtr(self).ToString("x8") + "; Self: 0x" + self.Handle.ToString("x8") + "; Owner: " + owner; }
 		public static implicit operator bool(Controller ptr) { return (ptr != null && tsController_isValidPtr(ptr.getSelf())); }
 		[DllImport(Base.Import)] private static extern IntPtr tsController_new();
@@ -17741,6 +17753,8 @@ namespace Tellusim {
 		[DllImport(Base.Import)] private static extern Button tsController_findButton(HandleRef self, string name);
 		[DllImport(Base.Import)] private static extern void tsController_setButton(HandleRef self, Button button, bool value);
 		[DllImport(Base.Import)] private static extern bool tsController_getButton(HandleRef self, Button button, bool clear);
+		[DllImport(Base.Import)] private static extern bool tsController_wasButtonPressed(HandleRef self, Button button);
+		[DllImport(Base.Import)] private static extern bool tsController_wasButtonReleased(HandleRef self, Button button);
 		[DllImport(Base.Import)] private static extern void tsController_setButtonValue(HandleRef self, Button button, float value);
 		[DllImport(Base.Import)] private static extern float tsController_getButtonValue(HandleRef self, Button button);
 		[DllImport(Base.Import)] private static extern void tsController_setMotorName(HandleRef self, Motor motor, string name);
