@@ -1,4 +1,0 @@
-PLUGINS = \
-	onnx
-
-include ..\Makefile.win

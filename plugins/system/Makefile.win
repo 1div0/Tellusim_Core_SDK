@@ -1,7 +1,0 @@
-PLUGINS = \
-	config \
-	logger \
-	reflection \
-	streamer
-
-include ..\Makefile.win

@@ -1,4 +1,0 @@
-SRCS = main.cpp \
-	source/TellusimControlApp.cpp
-
-include ..\..\Makefile.win.mk

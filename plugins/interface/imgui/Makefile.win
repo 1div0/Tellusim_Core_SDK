@@ -1,5 +1,0 @@
-SRCS = main.cpp \
-	source/TellusimImGui.cpp \
-	extern/imgui/imgui_demo.cpp
-
-include ..\..\Makefile.win.mk

@@ -1,6 +1,0 @@
-PLUGINS = \
-	draco \
-	gmsh \
-	webp
-
-include ..\Makefile.win

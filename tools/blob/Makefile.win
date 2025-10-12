@@ -1,7 +1,0 @@
-TARGET = blob$(POSTFIX).exe
-
-RESOURCES = blob.rc
-
-SRCS = blob.cpp
-
-include ..\Makefile.win.mk

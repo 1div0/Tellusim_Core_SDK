@@ -1,9 +1,0 @@
-TESTS = \
-	float \
-	matrix \
-	numerical \
-	quaternion \
-	expression \
-	simd
-
-include ..\Makefile.win

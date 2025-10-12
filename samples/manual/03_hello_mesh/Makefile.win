@@ -1,5 +1,0 @@
-SRCS = main.cpp
-
-CLEAN = model.mesh
-
-include ..\..\Makefile.win.mk

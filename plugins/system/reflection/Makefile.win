@@ -1,7 +1,0 @@
-SRCS = main.cpp \
-	source/TellusimReflection.cpp \
-	source/TellusimReflectionAPI.cpp
-
-FLAGS = $(FLAGS) /DTS_REFLECTION_FUNC=1
-
-include ..\..\Makefile.win.mk
