@@ -4,15 +4,16 @@ Tellusim Core SDK is the foundational layer of the Tellusim Engine, providing lo
 
 The SDK includes comprehensive support for meshes, images, user interfaces, and GPU-accelerated algorithms such as radix sort, bounding volume hierarchies (BVH), fast Fourier transforms (FFT), and GPU-driven computational graph framework for machine learning and advanced data processing.
 
-In addition to C++, the SDK provides bindings and interoperability for other languages such as C#, Rust, Swift, and Python, making it suitable for use in native mobile and desktop applications as well as game and graphics engines.
+In addition to C++, the SDK provides bindings and interoperability for other languages such as C#, Rust, Swift, Python, Java, and JavaScript, making it suitable for use in native mobile and desktop applications as well as game and graphics engines.
 
 Happy coding, and have fun creating with Tellusim!
 
 ## Licensing
 
-* Tellusim Core SDK is free for education
-* Tellusim Core SDK is free for companies with annual revenue less than USD $200,000
-* Tellusim Core SDK may be used for evaluation purposes, limited to testing, learning, and other non-commercial experimentation
+* *Tellusim Core SDK* is free for education.
+* *Tellusim Core SDK* is free for companies with annual revenue less than USD $200,000.
+* *Tellusim Core SDK* may be used for evaluation purposes, limited to testing, learning, and other non-commercial experimentation.
+* *Tellusim Core SDK* is free for open source non-commercial projects distributed under *OSI-approved licenses* (such as MIT, BSD, GPL, LGPL, or Apache 2.0), provided that such projects are not affiliated with or sponsored by for-profit organizations.
 * Any other use, including commercial or production deployment, requires a separate negotiated license with Tellusim Technologies Inc.
 
 For inquiries, visit: [Tellusim Services](https://tellusim.com/services/)
