@@ -10,32 +10,38 @@ Happy coding, and have fun creating with Tellusim!
 
 ## Licensing
 
-* *Tellusim Core SDK* is free for education.
-* *Tellusim Core SDK* is free for companies with annual revenue less than USD $200,000.
-* *Tellusim Core SDK* may be used for evaluation purposes, limited to testing, learning, and other non-commercial experimentation.
-* *Tellusim Core SDK* is free for open source non-commercial projects distributed under *OSI-approved licenses* (such as MIT, BSD, GPL, LGPL, or Apache 2.0), provided that such projects are not affiliated with or sponsored by for-profit organizations.
-* Any other use, including commercial or production deployment, requires a separate negotiated license with Tellusim Technologies Inc.
+* *Tellusim Core SDK* is free for educational use by students, teachers, and academic institutions.
+* *Tellusim Core SDK* is free for non-commercial research by individuals or non-profit organizations.
+* *Tellusim Core SDK* is free for individuals and companies with total annual revenue under USD $200,000.
+* *Tellusim Core SDK* is free for evaluation, testing, learning, and other non-commercial experimentation.
+* *Tellusim Core SDK* is free for open-source, non-commercial projects distributed under OSI-approved licenses (MIT, BSD, GPL, LGPL, or Apache 2.0), provided such projects generate no revenue and do not sell, license, or otherwise monetize software built with the Tellusim SDK.
+* *Tellusim Core SDK* is free for redistribution of the unmodified SDK and binaries built with it is permitted as part of free or open-source projects, provided the SDK itself is not sold, sublicensed, or rented for a fee.
+* Any other use, including production deployment, commercial projects, or client-facing demonstrations, requires a Tellusim Commercial License.
 
 For inquiries, visit: [Tellusim Services](https://tellusim.com/services/)
 
-## Documentation
+## Documentation and Support
 
-[Tellusim Core SDK Documentation](https://docs.tellusim.com/core)
+* [Tellusim Core SDK Documentation](https://docs.tellusim.com/core)
+* [Discord Channel](https://discord.gg/WmCGx6pvqY)
+* [Support Forum](https://forum.tellusim.com/)
 
 ## Platforms
 
 Please choose the correct branch for your platform:
 
-* [Windows x64](https://github.com/Tellusim/Tellusim_Core_SDK/tree/windows_x64)
-* [Windows arm64](https://github.com/Tellusim/Tellusim_Core_SDK/tree/windows_arm64)
-* [Linux x64](https://github.com/Tellusim/Tellusim_Core_SDK/tree/linux_x64)
-* [Linux arm64](https://github.com/Tellusim/Tellusim_Core_SDK/tree/linux_arm64)
-* [macOS x64](https://github.com/Tellusim/Tellusim_Core_SDK/tree/macos_x64)
-* [macOS arm64](https://github.com/Tellusim/Tellusim_Core_SDK/tree/macos_arm64)
-* [Android](https://github.com/Tellusim/Tellusim_Core_SDK/tree/android)
-* [iOS](https://github.com/Tellusim/Tellusim_Core_SDK/tree/ios)
-* [tvOS](https://github.com/Tellusim/Tellusim_Core_SDK/tree/tvos)
-* [Web](https://github.com/Tellusim/Tellusim_Core_SDK/tree/emscripten)
+| Platform       | Branch Link |
+|----------------|-------------|
+| Windows x64    | [Link](https://github.com/Tellusim/Tellusim_Core_SDK/tree/windows_x64) |
+| Windows arm64  | [Link](https://github.com/Tellusim/Tellusim_Core_SDK/tree/windows_arm64) |
+| Linux x64      | [Link](https://github.com/Tellusim/Tellusim_Core_SDK/tree/linux_x64) |
+| Linux arm64    | [Link](https://github.com/Tellusim/Tellusim_Core_SDK/tree/linux_arm64) |
+| macOS x64      | [Link](https://github.com/Tellusim/Tellusim_Core_SDK/tree/macos_x64) |
+| macOS arm64    | [Link](https://github.com/Tellusim/Tellusim_Core_SDK/tree/macos_arm64) |
+| Android        | [Link](https://github.com/Tellusim/Tellusim_Core_SDK/tree/android) |
+| iOS            | [Link](https://github.com/Tellusim/Tellusim_Core_SDK/tree/ios) |
+| tvOS           | [Link](https://github.com/Tellusim/Tellusim_Core_SDK/tree/tvos) |
+| Web            | [Link](https://github.com/Tellusim/Tellusim_Core_SDK/tree/emscripten) |
 
 # Graphics
 
